@@ -1,4 +1,5 @@
 import pandas as pd
+import random
 
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
@@ -57,8 +58,7 @@ class Process:
 				self.check_new()
 				self.time_elapsed()
 
-
-			print(self.df.to_string(index=False))
+		print(self.df.to_string(index=False))
 
 	def check_output(self):
 		"""Checks values in the output state and moves them to
@@ -93,7 +93,8 @@ class Process:
 			elif self.running[0].cpu_run_time == self.cpu_max_runtime:
 				self.running[self.fifo_lifo].cpu_run_time = 0
 				if self.fifo_lifo == 0:
-					self.ready.append(self.running[self.fifo_lifo]) # this adds
+					self.ready.append(
+						self.running[self.fifo_lifo])  # this adds
 				# to end of list to get whatever out of running then it is
 				# the next thing to go back in?
 				else:
@@ -198,12 +199,10 @@ class Process:
 
 		if len(self.output) > 0:
 			self.output[0].output -= 10
-		# Move forward in time by 10 us
 
+	# Move forward in time by 10 us
 
-
-		# Set the new dataframe row.
-
+	# Set the new dataframe row.
 
 	def ad_df_row(self, df, us, new, data_input, ready, running, blocked,
 	              output, terminated):
@@ -211,11 +210,11 @@ class Process:
 
 		df2 = {
 			'μs': us, 'NEW DATA': [x.process for x in new],
-			'INPUT': [{x.process:x.input} for x in data_input],
+			'INPUT': [{x.process: x.input} for x in data_input],
 			'READY': [x.process for x in ready],
-			'RUNNING': [{x.process:x.cpu_running} for x in running],
+			'RUNNING': [{x.process: x.cpu_running} for x in running],
 			'BLOCKED': [x.process for x in blocked],
-			'OUTPUT': [{x.process:x.output} for x in output],
+			'OUTPUT': [{x.process: x.output} for x in output],
 			'TERMINATED': [x.process for x in terminated]}
 
 		df = df.append(df2, ignore_index=True)
@@ -236,7 +235,6 @@ class NewProcess:
 # You will need to install an external library called pandas for this to work.
 # It was the best way to visualise the output table.
 
-# Create as many data processes
 process_a = NewProcess(
 				data='A', input_runtime=10, cpu_runtime=50, output_runtime=30
 						)
@@ -250,8 +248,21 @@ process_d = NewProcess(
 				data='D', input_runtime=20, cpu_runtime=10, output_runtime=10
 						)
 
-# Put data processes into a list
+#Put data processes into a list
 process_list = [process_a, process_b, process_c, process_d]
+
+# Uncomment below for a larger example, comment out items above; processes 
+# and process_list
+
+# process_list = []
+# times = [10, 20, 30, 40, 50, 60, 70, 80, 90]
+# for x in range(ord('A'), ord('O')):
+# 	process = NewProcess(
+# 		data=chr(x),
+# 		input_runtime=times[random.randint(0, len(times) - 1)],
+# 		cpu_runtime=times[random.randint(0, len(times) - 1)],
+# 		output_runtime=times[random.randint(0, len(times) - 1)])
+# 	process_list.append(process)
 
 # Create a new object by passing the list of data objects, the max CPU run
 # time and setting fifo_lifo to True for FIFO and False for LIFO
