@@ -41,6 +41,7 @@ class Process:
 				self.check_running()
 				self.check_ready()
 				self.check_input()
+				self.check_blocked()
 				self.check_output()
 				self.check_blocked()
 				self.check_new()
@@ -57,7 +58,7 @@ class Process:
 				self.time_elapsed()
 
 
-		print(self.df.to_string(index=False))
+			print(self.df.to_string(index=False))
 
 	def check_output(self):
 		"""Checks values in the output state and moves them to
@@ -67,9 +68,9 @@ class Process:
 		# output timer is up move it to terminated then remove from output
 		# if there is something in there with time left remove 10us
 		if len(self.output) > 0:
-			if self.output[self.fifo_lifo].output == 0:
+			if self.output[0].output == 0:
 				self.terminated.append(self.output[self.fifo_lifo])
-				self.output.pop(self.fifo_lifo)
+				self.output.pop(0)
 
 	def check_running(self):
 		"""Checks data in the running state, moved items into ready if
@@ -128,27 +129,39 @@ class Process:
 		if self.fifo_lifo == 0:
 			# FIFO
 			if len(self.blocked) > 0:
-				for index, x in enumerate(self.blocked):
+				for x in self.blocked:
 					if x.input != 0 and len(self.input) != 0:
 						pass
 					if x.input != 0 and len(self.input) == 0:
-						self.input.append(self.blocked[self.fifo_lifo])
-						self.blocked.pop(index)
+						data_name = x.process
+						for data in self.blocked:
+							if data.process == data_name:
+								self.input.append(data)
+								self.blocked.remove(data)
 					if x.input == 0 and len(self.output) == 0:
-						self.output.append(self.blocked[self.fifo_lifo])
-						self.blocked.pop(index)
+						data_name = x.process
+						for data in self.blocked:
+							if data.process == data_name:
+								self.output.append(data)
+								self.blocked.remove(data)
 		else:
 			# LIFO
 			if len(self.blocked) > 0:
-				for index, x in enumerate(self.blocked[::-1]):
+				for x in self.blocked[::-1]:
 					if x.input != 0 and len(self.input) != 0:
 						pass
 					if x.input != 0 and len(self.input) == 0:
-						self.input.append(self.blocked[self.fifo_lifo])
-						self.blocked.pop(len(self.blocked) - 1)
+						data_name = x.process
+						for data in self.blocked:
+							if data.process == data_name:
+								self.input.append(data)
+								self.blocked.remove(data)
 					if x.input == 0 and len(self.output) == 0:
-						self.output.append(self.blocked[self.fifo_lifo])
-						self.blocked.pop(len(self.blocked) - 1)
+						data_name = x.process
+						for data in self.blocked:
+							if data.process == data_name:
+								self.output.append(data)
+								self.blocked.remove(data)
 
 	def check_new(self):
 		"""Check if any items in input,if not move to input, if occupied
