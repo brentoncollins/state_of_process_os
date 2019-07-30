@@ -102,16 +102,16 @@ class Process:
 				# to end of list to get whatever out of running then it is
 				# the next thing to go back in?
 				else:
-					self.ready.insert(0, self.running[0])
-					#self.ready.append(self.running[0])
+					#self.ready.insert(0, self.running[0])
+					self.ready.append(self.running[0])
 				self.running.pop(self.fifo_lifo)
 
 	def check_ready(self):
 		"""Checks the ready state and moves into running if not occupied"""
 
 		if len(self.ready) > 0 and len(self.running) == 0:
-			self.running.append(self.ready[self.fifo_lifo])
-			self.ready.pop(self.fifo_lifo)
+			self.running.append(self.ready[0])
+			self.ready.pop(0)
 
 	def check_input(self):
 		"""Checks the running state if there is nothing in ready or running
