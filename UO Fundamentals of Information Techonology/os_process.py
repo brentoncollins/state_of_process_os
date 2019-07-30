@@ -241,33 +241,33 @@ class NewProcess:
 # It was the best way to visualise the output table.
 
 
-# process_a = NewProcess(
-# 				data='A', input_runtime=10, cpu_runtime=50, output_runtime=30
-# 						)
-# process_b = NewProcess(
-# 				data='B', input_runtime=10, cpu_runtime=30, output_runtime=40
-# 						)
-# process_c = NewProcess(
-# 				data='C', input_runtime=30, cpu_runtime=20, output_runtime=10
-# 						)
-# process_d = NewProcess(
-# 				data='D', input_runtime=20, cpu_runtime=10, output_runtime=10
-# 						)
-
-
-
 process_a = NewProcess(
-				data='A', input_runtime=30, cpu_runtime=60, output_runtime=10
+				data='A', input_runtime=10, cpu_runtime=50, output_runtime=30
 						)
 process_b = NewProcess(
-				data='B', input_runtime=10, cpu_runtime=20, output_runtime=20
+				data='B', input_runtime=10, cpu_runtime=30, output_runtime=40
 						)
 process_c = NewProcess(
-				data='C', input_runtime=20, cpu_runtime=50, output_runtime=30
+				data='C', input_runtime=30, cpu_runtime=20, output_runtime=10
 						)
 process_d = NewProcess(
 				data='D', input_runtime=20, cpu_runtime=10, output_runtime=10
 						)
+
+
+
+# process_a = NewProcess(
+# 				data='A', input_runtime=30, cpu_runtime=60, output_runtime=10
+# 						)
+# process_b = NewProcess(
+# 				data='B', input_runtime=10, cpu_runtime=20, output_runtime=20
+# 						)
+# process_c = NewProcess(
+# 				data='C', input_runtime=20, cpu_runtime=50, output_runtime=30
+# 						)
+# process_d = NewProcess(
+# 				data='D', input_runtime=20, cpu_runtime=10, output_runtime=10
+# 						)
 
 #Put data processes into a list
 process_list = [process_a, process_b, process_c, process_d]
@@ -287,5 +287,5 @@ process_list = [process_a, process_b, process_c, process_d]
 
 # Create a new object by passing the list of data objects, the max CPU run
 # time and setting fifo_lifo to True for FIFO and False for LIFO
-run = Process(process_list, cpu_max_run_time=40, fifo_lifo=True)
+run = Process(process_list, cpu_max_run_time=20, fifo_lifo=False)
 run.run_process()
