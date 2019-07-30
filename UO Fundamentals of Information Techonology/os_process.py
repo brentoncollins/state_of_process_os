@@ -59,6 +59,10 @@ class Process:
 				self.time_elapsed()
 
 		print(self.df.to_string(index=False))
+		if self.fifo_lifo == 0:
+			self.df.to_excel("FIFO.xlsx")
+		else:
+			self.df.to_excel("LIFO.xlsx")
 
 	def check_output(self):
 		"""Checks values in the output state and moves them to
@@ -283,5 +287,5 @@ process_list = [process_a, process_b, process_c, process_d]
 
 # Create a new object by passing the list of data objects, the max CPU run
 # time and setting fifo_lifo to True for FIFO and False for LIFO
-run = Process(process_list, cpu_max_run_time=20, fifo_lifo=True)
+run = Process(process_list, cpu_max_run_time=40, fifo_lifo=True)
 run.run_process()
