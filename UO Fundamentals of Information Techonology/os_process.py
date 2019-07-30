@@ -99,6 +99,7 @@ class Process:
 				# the next thing to go back in?
 				else:
 					self.ready.insert(0, self.running[0])
+					#self.ready.append(self.running[0])
 				self.running.pop(self.fifo_lifo)
 
 	def check_ready(self):
@@ -235,14 +236,30 @@ class NewProcess:
 # You will need to install an external library called pandas for this to work.
 # It was the best way to visualise the output table.
 
+
+# process_a = NewProcess(
+# 				data='A', input_runtime=10, cpu_runtime=50, output_runtime=30
+# 						)
+# process_b = NewProcess(
+# 				data='B', input_runtime=10, cpu_runtime=30, output_runtime=40
+# 						)
+# process_c = NewProcess(
+# 				data='C', input_runtime=30, cpu_runtime=20, output_runtime=10
+# 						)
+# process_d = NewProcess(
+# 				data='D', input_runtime=20, cpu_runtime=10, output_runtime=10
+# 						)
+
+
+
 process_a = NewProcess(
-				data='A', input_runtime=10, cpu_runtime=50, output_runtime=30
+				data='A', input_runtime=30, cpu_runtime=60, output_runtime=10
 						)
 process_b = NewProcess(
-				data='B', input_runtime=10, cpu_runtime=30, output_runtime=40
+				data='B', input_runtime=10, cpu_runtime=20, output_runtime=20
 						)
 process_c = NewProcess(
-				data='C', input_runtime=30, cpu_runtime=20, output_runtime=10
+				data='C', input_runtime=20, cpu_runtime=50, output_runtime=30
 						)
 process_d = NewProcess(
 				data='D', input_runtime=20, cpu_runtime=10, output_runtime=10
