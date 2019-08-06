@@ -237,7 +237,8 @@ class NewProcess:
 
 
 # INSTRUCTIONS #
-# You will need to install an external library called pandas for this to work.
+# You will need to install an external library called pandas and openpyxl for
+# this to work.
 # It was the best way to visualise the output table.
 
 
